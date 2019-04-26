@@ -8,7 +8,8 @@ async function setupDB() {
 }
 setupDB();
 const server = app.listen(process.env.PORT || 8000, function() {
-  console.log("Listening on http://localhost:8000");
+  let port = process.env.PORT || 8000;
+  console.log("Listening on http://localhost:" + port);
 });
 
 module.exports.default = server;

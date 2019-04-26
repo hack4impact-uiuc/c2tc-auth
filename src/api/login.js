@@ -16,6 +16,7 @@ router.post(
   ],
   handleAsyncErrors(async function(req, res) {
     // Input validation
+      console.log("Responding to POST /login");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return sendResponse(res, 400, "Invalid Request", {
