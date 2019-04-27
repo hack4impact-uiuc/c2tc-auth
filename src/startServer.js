@@ -7,10 +7,9 @@ async function setupDB() {
   mongoose.connect(prodURI, { useNewUrlParser: true });
 }
 setupDB();
-const server = app.listen(8000, function() {
-  console.log("Listening on http://localhost:8000");
+const server = app.listen(process.env.PORT || 8000, function() {
+  let port = process.env.PORT || 8000;
+  console.log("Listening on http://localhost:" + port);
 });
-
-app.listen(process.env.PORT || 8000)
 
 module.exports.default = server;
