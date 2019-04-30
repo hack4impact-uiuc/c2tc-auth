@@ -13,10 +13,10 @@ const handleAsyncErrors = require("../utils/errorHandler");
 router.post(
   "/forgotPassword",
   [
-    check("email").isEmail(),
-    check("answer")
-      .isString()
-      .isLength({ min: 1 })
+    check("email").isEmail()
+    // check("answer")
+    //   .isString()
+    //   .isLength({ min: 1 })
   ],
   handleAsyncErrors(async function(req, res) {
     // Input validation
