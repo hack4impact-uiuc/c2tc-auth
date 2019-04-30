@@ -2,7 +2,10 @@ const router = require("express").Router();
 const User = require("../models/User");
 const { check, validationResult } = require("express-validator/check");
 const { sendResponse } = require("./../utils/sendResponse");
-const { isGmailEnabled } = require("../utils/getConfigFile");
+const {
+  isGmailEnabled,
+  isSecurityQuestionEnabled
+} = require("../utils/getConfigFile");
 const { sendMail } = require("../utils/sendMail");
 const { generatePIN } = require("../utils/pinHelpers");
 const handleAsyncErrors = require("../utils/errorHandler");
@@ -42,9 +45,13 @@ router.post(
     if (!user) {
       return sendResponse(res, 400, "User does not exist in the DB.");
     }
+
+    const securityQuestionEnabled = await isSecurityQuestionEnabled();
+
     if (
-      req.body.answer &&
-      user.answer === req.body.answer.toLowerCase().replace(/\s/g, "")
+      (req.body.answer &&
+        user.answer === req.body.answer.toLowerCase().replace(/\s/g, "")) ||
+      !securityQuestionEnabled
     ) {
       generatePIN(user);
       await user.save();
